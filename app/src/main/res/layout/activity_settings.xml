@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center_vertical"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
 

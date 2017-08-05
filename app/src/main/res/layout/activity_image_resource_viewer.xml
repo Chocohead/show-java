@@ -12,7 +12,6 @@
         android:id="@+id/image_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/adView"
         android:layout_below="@+id/toolbar" />
 
 </RelativeLayout>
