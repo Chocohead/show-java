@@ -1,6 +1,5 @@
 package com.njlabs.showjava.ui;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBar;
@@ -11,16 +10,9 @@ import com.nononsenseapps.filepicker.AbstractFilePickerFragment;
 
 import java.io.File;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 public class FilePicker extends AbstractFilePickerActivity<File> {
 
     private FilePickerFragment currentFragment;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

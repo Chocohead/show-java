@@ -132,7 +132,7 @@ dependencies {
     }
 
     // CALLIGRAPHY
-    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    //compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 
     // FILE PICKER
     compile 'com.nononsenseapps:filepicker:2.5.3'

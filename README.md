@@ -2,7 +2,7 @@
 
 ![ShowJava Banner v0.1](https://raw.githubusercontent.com/niranjan94/show-java/master/banner.png?v1)
 
-An apk decompiler for android. Built on Android Studio 1.5 with gradle 2.8
+An APK Decompiler that runs straight on your Android smartphone. Built on Android Studio 2.3.3 with Gradle 3.3
 
 > The current GitHub master branch may be ahead of the Play Store version (and could be unstable/incomplete/buggy at some places)
 
@@ -12,7 +12,7 @@ This is a Decompiler that extracts the source code of an Android application (in
 
 ## Features
 
-- Select either **CFR 0.110**, **JaDX 0.6.1** or **FernFlower (analytical decompiler)** to use as the decompiler (more to come).
+- Select either **CFR 0.122**, **JaDX 0.6.1** or **FernFlower (analytical decompiler)** to use as the decompiler (more to come).
 - Runs directly on an android device (4.x and above).
 - Select apk from sdcard (or) from a list of installed applications.
 - Easy to use.

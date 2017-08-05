@@ -7,18 +7,12 @@ import android.support.multidex.MultiDex;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MainApplication extends Application {
 
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/lato-light.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build());
     }
 
     @Override

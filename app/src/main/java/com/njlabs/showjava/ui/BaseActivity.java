@@ -19,8 +19,6 @@ import android.view.MenuItem;
 
 import com.njlabs.showjava.R;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 @SuppressWarnings("unused")
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
@@ -31,11 +29,6 @@ public class BaseActivity extends AppCompatActivity {
     public boolean isPro = false;
     public boolean hawkLoaded;
     private String androidID;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
