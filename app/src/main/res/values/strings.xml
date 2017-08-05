@@ -51,9 +51,23 @@
     <string name="loading_installed_app">Loading installed applications…</string>
     <string name="landing_pick_from_installed">Pick from Installed</string>
     <string name="landing_pick_from_storage">Pick from sdcard</string>
+    <string name="pref_cat_decompiler_settings">Decompiler settings</string>
+    <string name="pref_check_skip_common_libs_title">Speed up by ignoring common open sourced libraries</string>
+    <string name="pref_check_skip_common_libs_desc">Speed up decompiling process</string>
+    <string name="pref_list_default_decompiler">Select the default decompiler</string>
+    <string name="pref_cat_ease_of_use">Ease of use</string>
+    <string name="pref_check_decompiler_select_title">Show/Hide the decompiler selection dialog box</string>
+    <string name="pref_check_decompiler_select_desc">Don\'t ask to pick decompiler each time</string>
+    <string name="pref_cat_experimental">Experimental</string>
+    <string name="pref_text_max_stack_size">Max. Thread stack size (in mb)</string>
+    <string name="pref_cat_help_and_support"><![CDATA[Help & Support]]></string>
+    <string name="pref_report_bug_desc">Tap to report any bug (or) issue found in this app.</string>
+    <string name="pref_report_bug_title">Report a bug</string>
+    <string name="pref_rate_gplay_desc">Tap to rate this app on Play Store</string>
+    <string name="pref_rate_gplay_title"><![CDATA[Rate & Review]]></string>
 
     <string-array name="decompilers">
-        <item>CFR 0.110</item>
+        <item>CFR 0.122</item>
         <item>JaDX 0.6.1</item>
         <item>FernFlower (analytical decompiler)</item>
     </string-array>

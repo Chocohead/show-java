@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Decompiler settings">
+    <PreferenceCategory android:title="@string/pref_cat_decompiler_settings">
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="ignore_libraries"
-            android:summary="Speed up by ignoring common open sourced libraries"
-            android:title="Speed up decompiling process" />
+            android:summary="@string/pref_check_skip_common_libs_title"
+            android:title="@string/pref_check_skip_common_libs_desc" />
 
         <ListPreference
             android:defaultValue="cfr"
@@ -16,45 +16,45 @@
             android:key="decompiler"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
-            android:title="Select default decompiler" />
+            android:title="@string/pref_list_default_decompiler" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Ease of use">
+    <PreferenceCategory android:title="@string/pref_cat_ease_of_use">
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="hide_decompiler_select"
-            android:summary="Show/Hide the decompiler selection dialog box"
-            android:title="Don't ask to pick decompiler each time" />
+            android:summary="@string/pref_check_decompiler_select_title"
+            android:title="@string/pref_check_decompiler_select_desc" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Experimental">
+    <PreferenceCategory android:title="@string/pref_cat_experimental">
 
         <EditTextPreference
             android:capitalize="words"
-            android:defaultValue="20"
+            android:defaultValue="40"
             android:inputType="number"
             android:key="thread_stack_size"
             android:maxLines="1"
             android:singleLine="true"
-            android:title="Max. Thread stack size (in mb)" />
+            android:title="@string/pref_text_max_stack_size" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Help &amp; Support">
+    <PreferenceCategory android:title="@string/pref_cat_help_and_support">
 
         <Preference
-            android:summary="Tap to report any bug (or) issue found in this app."
-            android:title="Report a bug">
+            android:summary="@string/pref_report_bug_desc"
+            android:title="@string/pref_report_bug_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/niranjan94/show-java/issues/new"/>
         </Preference>
 
         <Preference
-            android:summary="Tap to rate this app on Play Store"
-            android:title="Rate &amp; Review">
+            android:summary="@string/pref_rate_gplay_desc"
+            android:title="@string/pref_rate_gplay_title">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="market://details?id=com.njlabs.showjava"/>
