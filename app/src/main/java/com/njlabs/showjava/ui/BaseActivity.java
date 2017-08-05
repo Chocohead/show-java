@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,14 +27,12 @@ public class BaseActivity extends AppCompatActivity {
     protected SharedPreferences prefs;
     public boolean isPro = false;
     public boolean hawkLoaded;
-    private String androidID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         baseContext = this;
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        androidID =  Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         isPro = true;
     }
 

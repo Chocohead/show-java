@@ -12,7 +12,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 @SuppressWarnings("unused")
-public class ProcessServiceHelper {
+class ProcessServiceHelper {
 
     ProcessService processService;
     Handler UIHandler;
@@ -23,11 +23,11 @@ public class ProcessServiceHelper {
     ExceptionHandler exceptionHandler;
     PrintStream printStream = null;
 
-    public void broadcastStatus(String status) {
+    void broadcastStatus(String status) {
         processService.broadcastStatus(status);
     }
 
-    public void broadcastStatus(String statusKey, String statusData) {
+    void broadcastStatus(String statusKey, String statusData) {
         processService.broadcastStatus(statusKey, statusData);
     }
 
@@ -35,11 +35,11 @@ public class ProcessServiceHelper {
         processService.broadcastStatusWithPackageInfo(statusKey, dir, packId);
     }
 
-    protected class ToastRunnable implements Runnable {
+    class ToastRunnable implements Runnable {
 
         String mText;
 
-        public ToastRunnable(String text) {
+        ToastRunnable(String text) {
             mText = text;
         }
 
@@ -49,10 +49,8 @@ public class ProcessServiceHelper {
         }
     }
 
-    public class ProgressStream extends OutputStream {
-        public ProgressStream() {
-
-        }
+    class ProgressStream extends OutputStream {
+        ProgressStream() {}
 
         public void write(@NonNull byte[] data, int i1, int i2) {
             String str = new String(data).trim();
@@ -68,8 +66,6 @@ public class ProcessServiceHelper {
         }
 
         @Override
-        public void write(int arg0) throws IOException {
-
-        }
+        public void write(int arg0) throws IOException {}
     }
 }

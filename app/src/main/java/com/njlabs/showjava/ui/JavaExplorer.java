@@ -60,7 +60,7 @@ public class JavaExplorer extends BaseActivity {
             packageID = extras.getString("package_id");
 
             if (sourceDir != null) {
-                lv = (ListView) findViewById(R.id.list);
+                lv = findViewById(R.id.list);
                 currentDir = new File(sourceDir);
                 fill(currentDir);
             } else {
@@ -127,6 +127,7 @@ public class JavaExplorer extends BaseActivity {
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item o = adapter.getItem(position);
+                assert o != null;
                 if (o.getImage() == R.drawable.viewer_folder || o.getImage() == R.drawable.directory_up) {
                     currentDir = new File(o.getPath());
                     fill(currentDir);

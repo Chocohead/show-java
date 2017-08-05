@@ -65,6 +65,9 @@
     <string name="pref_report_bug_title">Report a bug</string>
     <string name="pref_rate_gplay_desc">Tap to rate this app on Play Store</string>
     <string name="pref_rate_gplay_title"><![CDATA[Rate & Review]]></string>
+    <string name="about_version_placeholder">Version</string>
+    <string name="show_java_pro">Show Java Pro</string>
+    <string name="applisting_version_placeholder">version</string>
 
     <string-array name="decompilers">
         <item>CFR 0.122</item>

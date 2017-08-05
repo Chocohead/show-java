@@ -63,37 +63,37 @@ public class ProcessService extends Service {
         super.onStartCommand(intent, flags, startId);
 
         this.startID = startId;
-        /**
-         * Initialize a handler for posting runnables that have to run on the UI thread
+        /*
+          Initialize a handler for posting runnables that have to run on the UI thread
          */
         UIHandler = new Handler();
 
-        /**
-         * Receive action from the intent and decide whether to start or stop the existing process
+        /*
+          Receive action from the intent and decide whether to start or stop the existing process
          */
         if (intent.getAction().equals(Constants.ACTION.START_PROCESS)) {
 
-            /**
-             * The intent's actions is {@link Constants.ACTION.START_PROCESS}
-             * Which means, the process has to start.
-             *
-             * We build the notification and start the process as a foreground process (to prevent it
-             * from being killed on exit)
+            /*
+              The intent's actions is {@link Constants.ACTION.START_PROCESS}
+              Which means, the process has to start.
+
+              We build the notification and start the process as a foreground process (to prevent it
+              from being killed on exit)
              */
             startForeground(Constants.PROCESS_NOTIFICATION_ID, buildNotification());
             handleIntent(intent);
 
         } else if (intent.getAction().equals(Constants.ACTION.STOP_PROCESS)) {
 
-            /**
-             * The intent's actions is {@link Constants.ACTION.STOP_PROCESS}
-             * Which means, the process has to stop and kill itself.
-             *
-             * We are broadcasting an 'exit' status so that any activity listening can exit.
-             * We stop the foreground process.
-             * And we forcefully kill the service.
-             *
-             * Uses the {@link #killSelf()} method.
+            /*
+              The intent's actions is {@link Constants.ACTION.STOP_PROCESS}
+              Which means, the process has to stop and kill itself.
+
+              We are broadcasting an 'exit' status so that any activity listening can exit.
+              We stop the foreground process.
+              And we forcefully kill the service.
+
+              Uses the {@link #killSelf()} method.
              */
 
             int toKillStartId = intent.getIntExtra("startId",-1);
@@ -112,8 +112,8 @@ public class ProcessService extends Service {
         STACK_SIZE = Integer.valueOf(prefs.getString("thread_stack_size", String.valueOf(20 * 1024 * 1024)));
         IGNORE_LIBS = prefs.getBoolean("ignore_libraries", true);
 
-        /**
-         * This is the main starting point of the ProcessorService. The intent is read and handled here
+        /*
+          This is the main starting point of the ProcessorService. The intent is read and handled here
          */
         Bundle extras = workIntent.getExtras();
         if (extras != null) {
@@ -354,7 +354,7 @@ public class ProcessService extends Service {
 
         final String mText;
 
-        public ToastRunnable(String text) {
+        ToastRunnable(String text) {
             mText = text;
         }
 

@@ -47,7 +47,7 @@ public class AppListing extends BaseActivity {
         super.onCreate(savedInstanceState);
         setupLayout(R.layout.activity_app_listing, "Show Java"+(isPro()?" Pro":""));
 
-        listView = (ListView) findViewById(R.id.list);
+        listView = findViewById(R.id.list);
 
         ApplicationLoader runner = new ApplicationLoader();
         runner.execute();
@@ -85,18 +85,20 @@ public class AppListing extends BaseActivity {
 
                 ViewHolder holder = new ViewHolder();
 
-                holder.packageLabel = (TextView) convertView.findViewById(R.id.pkg_name);
-                holder.packageName = (TextView) convertView.findViewById(R.id.pkg_id);
-                holder.packageVersion = (TextView) convertView.findViewById(R.id.pkg_version);
-                holder.packageFilePath = (TextView) convertView.findViewById(R.id.pkg_dir);
-                holder.packageIcon = (ImageView) convertView.findViewById(R.id.pkg_img);
+                holder.packageLabel = convertView.findViewById(R.id.pkg_name);
+                holder.packageName = convertView.findViewById(R.id.pkg_id);
+                holder.packageVersion = convertView.findViewById(R.id.pkg_version);
+                holder.packageFilePath = convertView.findViewById(R.id.pkg_dir);
+                holder.packageIcon = convertView.findViewById(R.id.pkg_img);
                 holder.position = position;
 
                 convertView.setTag(holder);
 
+                assert pkg != null;
                 holder.packageLabel.setText(pkg.packageLabel);
                 holder.packageName.setText(pkg.packageName);
-                holder.packageVersion.setText("version " + pkg.packageVersion);
+                String packageVersionText = getString(R.string.applisting_version_placeholder) + pkg.packageVersion;
+                holder.packageVersion.setText(packageVersionText);
                 holder.packageFilePath.setText(pkg.packageFilePath);
 
                 holder.packageIcon.setImageDrawable(pkg.packageIcon);

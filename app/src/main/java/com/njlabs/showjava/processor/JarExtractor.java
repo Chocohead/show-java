@@ -25,15 +25,12 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Niranjan on 29-05-2015.
- */
 @SuppressWarnings({"ResultOfMethodCallIgnored", "ConstantConditions"})
-public class JarExtractor extends ProcessServiceHelper {
+class JarExtractor extends ProcessServiceHelper {
 
     private final ArrayList<String> ignoredLibs;
 
-    public JarExtractor(ProcessService processService) {
+    JarExtractor(ProcessService processService) {
         this.processService = processService;
         this.UIHandler = processService.UIHandler;
         this.packageFilePath = processService.packageFilePath;
@@ -50,7 +47,7 @@ public class JarExtractor extends ProcessServiceHelper {
         //////
     }
 
-    public void extract() {
+    void extract() {
         ThreadGroup group = new ThreadGroup("DEX TO JAR EXTRACTION");
         broadcastStatus("optimise_dex_start");
         Runnable runProcess = new Runnable() {

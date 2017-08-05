@@ -13,9 +13,10 @@ public class About extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupLayout(R.layout.activity_about);
-        ((TextView) findViewById(R.id.AppVersion)).setText("Version " + BuildConfig.VERSION_NAME);
+        String appVersionName = getString(R.string.about_version_placeholder) + BuildConfig.VERSION_NAME;
+        ((TextView) findViewById(R.id.AppVersion)).setText(appVersionName);
         if(isPro()) {
-            ((TextView) findViewById(R.id.AppName)).setText("Show Java Pro");
+            ((TextView) findViewById(R.id.AppName)).setText(R.string.show_java_pro);
         }
     }
 

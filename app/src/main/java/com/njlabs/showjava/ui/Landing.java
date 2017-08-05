@@ -42,7 +42,6 @@ import com.njlabs.showjava.Constants;
 import com.njlabs.showjava.R;
 import com.njlabs.showjava.utils.SourceInfo;
 import com.njlabs.showjava.utils.Utils;
-import com.njlabs.showjava.utils.Verify;
 import com.njlabs.showjava.utils.logging.Ln;
 import com.nononsenseapps.filepicker.FilePickerActivity;
 
@@ -94,30 +93,6 @@ public class Landing extends BaseActivity {
         drawerItems.add(new PrimaryDrawerItem().withName("Report a Bug").withIcon(R.drawable.ic_action_bug_report).withCheckable(false));
         drawerItems.add(new PrimaryDrawerItem().withName("About the app").withIcon(R.drawable.ic_action_info).withCheckable(false));
         drawerItems.add(new PrimaryDrawerItem().withName("Settings").withIcon(R.drawable.ic_action_settings).withCheckable(false));
-
-        if(!isPro()) {
-            drawerItems.add(new DividerDrawerItem());
-            drawerItems.add(new PrimaryDrawerItem().withName("Get Show Java Pro").withIcon(R.mipmap.ic_logo_plain).withCheckable(false));
-        } else {
-            if(!Verify.good(baseContext)){
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(baseContext, R.style.AlertDialog);
-                alertDialog.setCancelable(false);
-                alertDialog.setMessage("Show Java Pro has been disabled. Either you have Lucky Patcher (or) Freedom (or) the apk has been tampered with. If you have really purchased Pro, please fix the above mentioned errors to get the purchase restored.");
-                alertDialog.setPositiveButton("I Understand", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        Toast.makeText(baseContext, "Thanks for understanding ... :)", Toast.LENGTH_LONG).show();
-                    }
-                });
-                alertDialog.setNegativeButton("I'm a Pirate", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(baseContext, "Well... I'm not :)", Toast.LENGTH_LONG).show();
-                        finish();
-                    }
-                });
-                alertDialog.show();
-            }
-        }
 
         Drawer result = new DrawerBuilder()
                 .withActivity(this)

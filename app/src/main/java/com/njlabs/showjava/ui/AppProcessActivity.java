@@ -44,10 +44,10 @@ public class AppProcessActivity extends BaseActivity {
 
         setupLayoutNoActionBar(R.layout.activity_progress);
 
-        CurrentStatus = (TextView) findViewById(R.id.current_status);
-        CurrentLine = (TextView) findViewById(R.id.current_line);
+        CurrentStatus = findViewById(R.id.current_status);
+        CurrentLine = findViewById(R.id.current_line);
 
-        TextView appNameView = (TextView) findViewById(R.id.current_package_name);
+        TextView appNameView = findViewById(R.id.current_package_name);
 
         CurrentStatus.setText(R.string.status_starting_decompiler);
 
@@ -127,8 +127,8 @@ public class AppProcessActivity extends BaseActivity {
     }
 
     private void setupGears() {
-        final ImageView GearProgressLeft = (ImageView) findViewById(R.id.gear_progress_left);
-        final ImageView GearProgressRight = (ImageView) findViewById(R.id.gear_progress_right);
+        final ImageView GearProgressLeft = findViewById(R.id.gear_progress_left);
+        final ImageView GearProgressRight = findViewById(R.id.gear_progress_right);
 
         final RotateAnimation GearProgressLeftAnim = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         GearProgressLeftAnim.setRepeatCount(Animation.INFINITE);

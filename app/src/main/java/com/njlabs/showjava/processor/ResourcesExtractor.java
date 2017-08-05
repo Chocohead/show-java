@@ -21,14 +21,11 @@ import java.util.zip.ZipFile;
 
 import jadx.api.JadxDecompiler;
 
-/**
- * Created by Niranjan on 30-05-2015.
- */
-public class ResourcesExtractor extends ProcessServiceHelper {
+class ResourcesExtractor extends ProcessServiceHelper {
 
     private final ApkParser apkParser;
 
-    public ResourcesExtractor(ProcessService processService) {
+    ResourcesExtractor(ProcessService processService) {
         this.processService = processService;
         this.UIHandler = processService.UIHandler;
         this.packageFilePath = processService.packageFilePath;
@@ -39,7 +36,7 @@ public class ResourcesExtractor extends ProcessServiceHelper {
         this.javaSourceOutputDir = processService.javaSourceOutputDir;
     }
 
-    public void extract() {
+    void extract() {
         broadcastStatus("res");
         if(processService.decompilerToUse.equals("jadx")){
             extractResourcesWithJadx();

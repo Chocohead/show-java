@@ -102,6 +102,9 @@
             android:layout_height="wrap_content"
             android:onClick="OpenFilePicker"
             android:src="@drawable/ic_action_pick_sdcard"
+            fab:fab_colorNormal="@color/accent"
+            fab:menu_colorPressed="@color/accent"
+            fab:menu_colorRipple="@color/accent"
             fab:fab_label="@string/landing_pick_from_storage"
             fab:fab_size="mini" />
 
@@ -111,6 +114,9 @@
             android:layout_height="wrap_content"
             android:onClick="OpenAppListing"
             android:src="@drawable/ic_action_pick_installed"
+            fab:fab_colorNormal="@color/accent"
+            fab:menu_colorPressed="@color/accent"
+            fab:menu_colorRipple="@color/accent"
             fab:fab_label="@string/landing_pick_from_installed"
             fab:fab_size="mini" />
 
