@@ -16,16 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.njlabs.showjava.R;
-import com.njlabs.showjava.utils.AesCbcWithIntegrity;
-
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -36,7 +28,6 @@ public class BaseActivity extends AppCompatActivity {
     public Context baseContext;
     public Toolbar toolbar;
     protected SharedPreferences prefs;
-    private AdView mAdView;
     public boolean isPro = false;
     public boolean hawkLoaded;
     private String androidID;
@@ -52,19 +43,17 @@ public class BaseActivity extends AppCompatActivity {
         baseContext = this;
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         androidID =  Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        isPro = get();
+        isPro = true;
     }
 
     public void setupLayout(int layoutRef) {
         setContentView(layoutRef);
         setupToolbar(null);
-        setupGoogleAds();
     }
 
     public void setupLayout(int layoutRef, String title) {
         setContentView(layoutRef);
         setupToolbar(title);
-        setupGoogleAds();
     }
 
     public void setupLayoutNoActionBar(int layoutRef) {
@@ -73,7 +62,7 @@ public class BaseActivity extends AppCompatActivity {
 
     @SuppressWarnings("ConstantConditions")
     private void setupToolbar(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (title != null) {
             getSupportActionBar().setTitle(title);
@@ -163,65 +152,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public boolean isPro(){
-        return isPro;
+        return true;
     }
-    
-    public boolean isLollipop() {
+        public boolean isLollipop() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
-
     public boolean isMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
-
-    private void setupGoogleAds() {
-        mAdView = (AdView) findViewById(R.id.adView);
-        if (mAdView != null) {
-            mAdView.setVisibility(View.GONE);
-            if (!isPro()) {
-                AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-                mAdView.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdFailedToLoad(int errorCode) {
-                        super.onAdFailedToLoad(errorCode);
-                        mAdView.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onAdLoaded() {
-                        super.onAdLoaded();
-                        mAdView.setVisibility(View.VISIBLE);
-                    }
-                });
-                mAdView.loadAd(adRequest);
-                if (!checkDataConnection()) {
-                    mAdView.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
-
-    public void put(boolean val){
-        try {
-            AesCbcWithIntegrity.SecretKeys keys = new AesCbcWithIntegrity.SecretKeys(getResources().getString(R.string.cc),getResources().getString(R.string.ii));
-            AesCbcWithIntegrity.CipherTextIvMac cipherTextIvMac;
-            cipherTextIvMac = AesCbcWithIntegrity.encrypt(val ? "true" : "false", keys);
-            String ciphertextString = cipherTextIvMac.toString();
-            prefs.edit().putString(androidID,ciphertextString ).apply();
-        } catch (UnsupportedEncodingException | GeneralSecurityException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean get(){
-        try {
-            AesCbcWithIntegrity.SecretKeys keys = new AesCbcWithIntegrity.SecretKeys(getResources().getString(R.string.cc),getResources().getString(R.string.ii));
-            String plainText = AesCbcWithIntegrity.decryptString(prefs.getString(androidID,""), keys);
-            return (plainText.equals("true"));
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-
 }

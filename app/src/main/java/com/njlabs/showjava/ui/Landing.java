@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -30,11 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.TransactionDetails;
-import com.crashlytics.android.Crashlytics;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -46,7 +40,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.njlabs.showjava.BuildConfig;
 import com.njlabs.showjava.Constants;
 import com.njlabs.showjava.R;
-import com.njlabs.showjava.utils.AesCbcWithIntegrity;
 import com.njlabs.showjava.utils.SourceInfo;
 import com.njlabs.showjava.utils.Utils;
 import com.njlabs.showjava.utils.Verify;
@@ -55,22 +48,15 @@ import com.nononsenseapps.filepicker.FilePickerActivity;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
-import xyz.codezero.apl.SV;
-
 
 @SuppressWarnings("unused")
-public class Landing extends BaseActivity  implements BillingProcessor.IBillingHandler{
+public class Landing extends BaseActivity {
 
     private static final int FILE_PICKER = 0;
 
@@ -86,11 +72,11 @@ public class Landing extends BaseActivity  implements BillingProcessor.IBillingH
 
         setupLayout(R.layout.activity_landing);
 
-        listView = (ListView) findViewById(R.id.history_list);
+        listView = findViewById(R.id.history_list);
         View header = getLayoutInflater().inflate(R.layout.history_header_view, listView, false);
         listView.addHeaderView(header, null, false);
 
-        welcomeLayout = (LinearLayout) findViewById(R.id.welcome_layout);
+        welcomeLayout = findViewById(R.id.welcome_layout);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -114,7 +100,6 @@ public class Landing extends BaseActivity  implements BillingProcessor.IBillingH
             drawerItems.add(new PrimaryDrawerItem().withName("Get Show Java Pro").withIcon(R.mipmap.ic_logo_plain).withCheckable(false));
         } else {
             if(!Verify.good(baseContext)){
-                put(false);
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(baseContext, R.style.AlertDialog);
                 alertDialog.setCancelable(false);
                 alertDialog.setMessage("Show Java Pro has been disabled. Either you have Lucky Patcher (or) Freedom (or) the apk has been tampered with. If you have really purchased Pro, please fix the above mentioned errors to get the purchase restored.");
@@ -154,9 +139,9 @@ public class Landing extends BaseActivity  implements BillingProcessor.IBillingH
                             case 4:
                                 startActivity(new Intent(baseContext, SettingsActivity.class));
                                 break;
-                            case 6:
+                            /*case 6:
                                 startActivity(new Intent(baseContext, PurchaseActivity.class));
-                                break;
+                                break;*/
                         }
                         return false;
                     }
@@ -173,17 +158,6 @@ public class Landing extends BaseActivity  implements BillingProcessor.IBillingH
         } else {
             initHistoryLoader();
         }
-
-
-        try {
-
-            AesCbcWithIntegrity.SecretKeys keys = new AesCbcWithIntegrity.SecretKeys(getResources().getString(R.string.cc),getResources().getString(R.string.ii));
-            String plainText = AesCbcWithIntegrity.decryptString(BuildConfig.GOOGLE_PLAY_LICENSE_KEY, keys);
-            bp = new BillingProcessor(this, plainText, this);
-
-        } catch (GeneralSecurityException | UnsupportedEncodingException e) {
-            Crashlytics.logException(e);
-        }
     }
 
     public void initHistoryLoader(){
@@ -199,9 +173,10 @@ public class Landing extends BaseActivity  implements BillingProcessor.IBillingH
             welcomeLayout.setVisibility(View.INVISIBLE);
 
             ArrayAdapter<SourceInfo> decompileHistoryItemArrayAdapter = new ArrayAdapter<SourceInfo>(getBaseContext(), R.layout.history_list_item, AllPackages) {
+                @NonNull
                 @SuppressLint("InflateParams")
                 @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
+                public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                     if (convertView == null) {
                         convertView = getLayoutInflater().inflate(R.layout.history_list_item, null);
                     }
@@ -210,12 +185,13 @@ public class Landing extends BaseActivity  implements BillingProcessor.IBillingH
 
                     ViewHolder holder = new ViewHolder();
 
-                    holder.packageLabel = (TextView) convertView.findViewById(R.id.history_item_label);
-                    holder.packageName = (TextView) convertView.findViewById(R.id.history_item_package);
-                    holder.packageIcon = (ImageView) convertView.findViewById(R.id.history_item_icon);
+                    holder.packageLabel = convertView.findViewById(R.id.history_item_label);
+                    holder.packageName = convertView.findViewById(R.id.history_item_package);
+                    holder.packageIcon = convertView.findViewById(R.id.history_item_icon);
 
                     convertView.setTag(holder);
 
+                    assert pkg != null;
                     holder.packageLabel.setText(pkg.getPackageLabel());
                     holder.packageName.setText(pkg.getPackageName());
 
@@ -289,10 +265,8 @@ public class Landing extends BaseActivity  implements BillingProcessor.IBillingH
                     if (info != null) {
                         ApplicationInfo appInfo = info.applicationInfo;
 
-                        if (Build.VERSION.SDK_INT >= 8) {
-                            appInfo.sourceDir = PackageDir;
-                            appInfo.publicSourceDir = PackageDir;
-                        }
+                        appInfo.sourceDir = PackageDir;
+                        appInfo.publicSourceDir = PackageDir;
                         PackageName = info.applicationInfo.loadLabel(getPackageManager()).toString();
                         PackageId = info.packageName;
 
@@ -457,85 +431,10 @@ public class Landing extends BaseActivity  implements BillingProcessor.IBillingH
     }
 
     @Override
-    public void onBillingInitialized() {
-        if(!isPro()) {
-            bp.loadOwnedPurchasesFromGoogle();
-        }
-    }
-
-    @Override
-    public void onProductPurchased(String productId, TransactionDetails transactionDetails) {
-
-    }
-
-    @Override
-    public void onBillingError(int i, Throwable throwable) {
-        Ln.e(throwable);
-    }
-
-    @Override
-    public void onPurchaseHistoryRestored() {
-        try {
-            final TransactionDetails transactionDetails = bp.getPurchaseTransactionDetails(BuildConfig.IAP_PRODUCT_ID);
-            if(transactionDetails.productId.equals(BuildConfig.IAP_PRODUCT_ID)) {
-
-                AsyncHttpClient client = new AsyncHttpClient();
-                RequestParams params = new RequestParams();
-
-                params.put("payload", SV.gen(baseContext,transactionDetails.purchaseToken));
-                params.put("order_id", transactionDetails.orderId);
-
-                client.post(com.njlabs.showjava.Constants.VERIFICATION_URL, params,
-                        new JsonHttpResponseHandler() {
-
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                                try {
-                                    if (response.has("status") && response.getString("status").equals("ok")) {
-                                        if (response.has("payload")) {
-                                            if (SV.good(baseContext, response.getString("payload"), transactionDetails.purchaseToken)) {
-                                                showPurchased();
-                                            } else {
-                                                showError();
-                                            }
-                                        } else {
-                                            showError();
-                                        }
-                                    } else {
-                                        showError();
-                                    }
-                                } catch (JSONException e) {
-                                    showError();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                Ln.e(throwable);
-                            }
-                        });
-            } else {
-                put(false);
-            }
-        } catch (Exception ignored) {
-            put(false);
-        }
-    }
-
-    @Override
     public void onDestroy() {
         if (bp != null)
             bp.release();
         super.onDestroy();
-    }
-
-    public void showError() {
-        Toast.makeText(this, "Your purchase could not be verified.", Toast.LENGTH_SHORT).show();
-    }
-
-    public void showPurchased() {
-        put(true);
-        Toast.makeText(this, "Thank you for purchasing Show Java Pro :)", Toast.LENGTH_SHORT).show();
     }
 
 

@@ -117,9 +117,5 @@
 
     </com.github.clans.fab.FloatingActionMenu>
 
-    <include
-        android:id="@+id/adView"
-        layout="@layout/adview" />
-
 
 </RelativeLayout>

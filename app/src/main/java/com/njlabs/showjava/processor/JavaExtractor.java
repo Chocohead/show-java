@@ -6,11 +6,17 @@ import com.njlabs.showjava.utils.ZipUtils;
 import com.njlabs.showjava.utils.logging.Ln;
 
 import org.benf.cfr.reader.Main;
+import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance;
 import org.benf.cfr.reader.state.ClassFileSourceImpl;
 import org.benf.cfr.reader.state.DCCommonState;
+import org.benf.cfr.reader.state.TypeUsageInformation;
 import org.benf.cfr.reader.util.getopt.GetOptParser;
 import org.benf.cfr.reader.util.getopt.Options;
 import org.benf.cfr.reader.util.getopt.OptionsImpl;
+import org.benf.cfr.reader.util.output.Dumper;
+import org.benf.cfr.reader.util.output.DumperFactory;
+import org.benf.cfr.reader.util.output.IllegalIdentifierDump;
+import org.benf.cfr.reader.util.output.SummaryDumper;
 import org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler;
 import org.jetbrains.java.decompiler.main.decompiler.PrintStreamLogger;
 
@@ -21,12 +27,9 @@ import java.util.Map;
 
 import jadx.api.JadxDecompiler;
 
-/**
- * Created by Niranjan on 29-05-2015.
- */
-public class JavaExtractor extends ProcessServiceHelper {
+class JavaExtractor extends ProcessServiceHelper {
 
-    public JavaExtractor(ProcessService processService) {
+    JavaExtractor(ProcessService processService) {
         this.processService = processService;
         this.UIHandler = processService.UIHandler;
         this.packageFilePath = processService.packageFilePath;
@@ -42,7 +45,7 @@ public class JavaExtractor extends ProcessServiceHelper {
         }
     }
 
-    public void extract() {
+    void extract() {
 
         broadcastStatus("jar2java");
 
@@ -82,13 +85,13 @@ public class JavaExtractor extends ProcessServiceHelper {
         String[] args = {jarInputFile.toString(), "--outputdir", javaOutputDir.toString()};
         GetOptParser getOptParser = new GetOptParser();
 
-        Options options = null;
+        Options options;
         try {
             options = getOptParser.parse(args, OptionsImpl.getFactory());
 
             if(!options.optionIsSet(OptionsImpl.HELP) && options.getOption(OptionsImpl.FILENAME) != null) {
                 ClassFileSourceImpl classFileSource = new ClassFileSourceImpl(options);
-                final DCCommonState dcCommonState = new DCCommonState(options, classFileSource);
+                final DCCommonState DCCommonState = new DCCommonState(options, classFileSource);
                 final String path = options.getOption(OptionsImpl.FILENAME);
 
                 ThreadGroup group = new ThreadGroup("Jar 2 Java Group");
@@ -97,7 +100,17 @@ public class JavaExtractor extends ProcessServiceHelper {
                     public void run() {
                         boolean javaError = false;
                         try {
-                            Main.doJar(dcCommonState, path);
+                            Main.doJar(DCCommonState, path, new DumperFactory() {
+                                @Override
+                                public Dumper getNewTopLevelDumper(Options options, JavaTypeInstance javaTypeInstance, SummaryDumper summaryDumper, TypeUsageInformation typeUsageInformation, IllegalIdentifierDump illegalIdentifierDump) {
+                                    return null;
+                                }
+
+                                @Override
+                                public SummaryDumper getSummaryDumper(Options options) {
+                                    return null;
+                                }
+                            });
                         } catch (Exception | StackOverflowError e) {
                             Ln.e(e);
                             javaError = true;
